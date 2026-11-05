@@ -1,0 +1,125 @@
+{
+  "deck_version": 1,
+  "questions": [
+    {
+      "id": "TW-PID-01",
+      "title": "A quick PI stability check",
+      "topic": "Feedback / PID",
+      "paragraphs": [
+        "With unity negative feedback, use G(s)=1/(s+1) and C(s)=1+Ki/s, where Ki>0.",
+        "Is the closed loop asymptotically stable for every positive Ki? Justify briefly."
+      ],
+      "image": "question-images/TW-PID-01.png"
+    },
+    {
+      "id": "TW-PID-02",
+      "title": "Why does the integrator wind up?",
+      "topic": "Feedback / PID",
+      "paragraphs": [
+        "An actuator saturates while a PI controller keeps accumulating positive error.",
+        "Why can recovery become slow, and how can anti-windup help?"
+      ],
+      "image": "question-images/TW-PID-02.png"
+    },
+    {
+      "id": "TW-STA-01",
+      "title": "A Lyapunov derivative with zeros",
+      "topic": "Stability",
+      "paragraphs": [
+        "For dx/dt=y and dy/dt=-x-y^3, V=(x^2+y^2)/2 gives dV/dt=-y^4.",
+        "Do all trajectories approach the origin? Explain why y=0 cannot persist when x is nonzero."
+      ],
+      "image": "question-images/TW-STA-01.png"
+    },
+    {
+      "id": "TW-STA-02",
+      "title": "Which initial states return to zero?",
+      "topic": "Stability",
+      "paragraphs": [
+        "For dx/dt=-x+x^3, which initial states converge to zero: |x(0)|<1, |x(0)|<=1, or all real values?",
+        "Explain your choice."
+      ],
+      "image": "question-images/TW-STA-02.png"
+    },
+    {
+      "id": "TW-LIN-01",
+      "title": "An uncontrollable but stabilizable system",
+      "topic": "Linear Systems",
+      "paragraphs": [
+        "A continuous-time system has A=diag(-1,2), B=[0;1], and feedback u=-Kx.",
+        "Can feedback stabilize it even though it is not controllable? Give one suitable K."
+      ],
+      "image": "question-images/TW-LIN-01.png"
+    },
+    {
+      "id": "TW-LIN-02",
+      "title": "Can one input control both states?",
+      "topic": "Linear Systems",
+      "paragraphs": [
+        "A continuous-time system has A=[0,1;0,0], B=[0;1].",
+        "Is it controllable? Show the matrix [B,AB]."
+      ],
+      "image": "question-images/TW-LIN-02.png"
+    },
+    {
+      "id": "TW-EST-01",
+      "title": "How much should a Kalman update move?",
+      "topic": "Estimation",
+      "paragraphs": [
+        "For y=x+v, a scalar Kalman filter has prior estimate x_hat=2, prior variance P=1, and independent measurement-noise variance R=3. The new measurement is y=6.",
+        "What is the updated estimate?"
+      ],
+      "image": "question-images/TW-EST-01.png"
+    },
+    {
+      "id": "TW-EST-02",
+      "title": "Can state and bias be separated?",
+      "topic": "Estimation",
+      "paragraphs": [
+        "A sensor repeatedly reports y=x+b, where both the unknown state x and unknown bias b are constant.",
+        "Can an estimator uniquely recover both from these readings alone? Explain."
+      ],
+      "image": "question-images/TW-EST-02.png"
+    },
+    {
+      "id": "TW-MPC-01",
+      "title": "A bounded control move",
+      "topic": "Optimization / MPC",
+      "paragraphs": [
+        "For x_next=x+u at x=2, minimize (x+u)^2+u^2 subject to -0.5<=u<=0.5.",
+        "What input minimizes the cost?"
+      ],
+      "image": "question-images/TW-MPC-01.png"
+    },
+    {
+      "id": "TW-MPC-02",
+      "title": "What does receding horizon mean?",
+      "topic": "Optimization / MPC",
+      "paragraphs": [
+        "An MPC solve returns the planned inputs [0.4, 0.1, -0.2].",
+        "In standard receding-horizon control, which input is applied now, and what happens at the next sampling instant?"
+      ],
+      "image": "question-images/TW-MPC-02.png"
+    },
+    {
+      "id": "TW-MAS-01",
+      "title": "Connected, but still no consensus",
+      "topic": "Multi-Agent Systems",
+      "paragraphs": [
+        "Two agents synchronously use x1(k+1)=x2(k), x2(k+1)=x1(k). Initially their values are 0 and 2.",
+        "Do they converge to consensus? Explain."
+      ],
+      "image": "question-images/TW-MAS-01.png"
+    },
+    {
+      "id": "TW-MAS-02",
+      "title": "Consensus can be a weighted average",
+      "topic": "Multi-Agent Systems",
+      "paragraphs": [
+        "Agents use x(k+1)=W*x(k), with W=[1/2,1/2;1/4,3/4], x(0)=[0;6].",
+        "What common value do they approach? Briefly justify."
+      ],
+      "image": "question-images/TW-MAS-02.png"
+    }
+  ]
+}

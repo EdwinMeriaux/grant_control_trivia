@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Help improve Grant Control Trivia: answer three short control-theory questions and share your feedback.">
+  <title>Grant Control Trivia | Question Evaluation</title>
+  <link rel="stylesheet" href="site.css?v=1">
+  <script src="config.js?v=1" defer></script>
+  <script src="app.js?v=1" defer></script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a class="brand" href="./" aria-label="Grant Control Trivia home"><span class="brandicon" aria-hidden="true">G</span><span>Grant Control <span class="brand-sub">Trivia</span></span></a>
+      <span class="pill">Question Evaluation Study</span>
+    </header>
+    <main id="survey-view">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="eyebrow">Three questions · Your expertise · Better cards</div>
+        <h1 id="page-title">Help us improve<br><span>Grant Control Trivia.</span></h1>
+        <p>Answer three short control-theory questions, tell us how clear they are, and flag any technical issues you notice.</p>
+        <div class="stats"><span class="pill">3 randomly assigned questions</span><span class="pill">Around 5–10 minutes</span><span class="pill">No account required</span></div>
+      </section>
+      <aside class="notice" aria-label="Before you begin">
+        <strong>Before you begin</strong>
+        <p>Give your answer and a brief explanation for each question. Scratch paper and a basic calculator are welcome. If you’re unsure, say so. Technical feedback is optional.</p>
+        <p class="small">In the cards, semicolons separate matrix rows and ^ denotes a power. Participation is voluntary; please avoid entering identifying details.</p>
+      </aside>
+      <div class="survey-head"><h2>Your three questions</h2><span id="progress-text" aria-live="polite">Loading questions…</span></div>
+      <div class="progress" role="progressbar" aria-label="Questions answered" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"><div id="progress-fill"></div></div>
+      <p id="load-error" class="error" role="alert" hidden></p>
+      <button id="retry-load" class="secondary" type="button" hidden>Try loading again</button>
+      <form id="survey-form" hidden>
+        <div id="questions"></div>
+        <section class="panel background-panel" aria-labelledby="background-title">
+          <div class="eyebrow">One last thing</div>
+          <h2 id="background-title">A little about your background.</h2>
+          <p class="subtle">This helps us understand who the questions work well for.</p>
+          <div class="profile-grid">
+            <fieldset class="question">
+              <legend>What is your background?</legend>
+              <div class="choices">
+                <label class="choice"><input type="radio" name="background" value="academia_controls" required><span>Academia, focused on controls</span></label>
+                <label class="choice"><input type="radio" name="background" value="academia_other" required><span>Academia, outside controls</span></label>
+                <label class="choice"><input type="radio" name="background" value="non_academia" required><span>Outside academia</span></label>
+              </div>
+            </fieldset>
+            <fieldset class="question">
+              <legend>What is the highest degree you have completed or are actively pursuing?</legend>
+              <div class="choices">
+                <label class="choice"><input type="radio" name="highest_degree" value="phd" required><span>PhD</span></label>
+                <label class="choice"><input type="radio" name="highest_degree" value="masters" required><span>Master’s</span></label>
+                <label class="choice"><input type="radio" name="highest_degree" value="undergrad" required><span>Undergraduate</span></label>
+                <label class="choice"><input type="radio" name="highest_degree" value="other" required><span>Other</span></label>
+              </div>
+            </fieldset>
+          </div>
+          <p id="submit-error" class="error" role="alert" hidden></p>
+          <div class="submit-row"><p class="small subtle">Your responses will be sent to the survey organizer.</p><button id="submit" class="primary" type="submit">Submit all three responses <span aria-hidden="true">→</span></button></div>
+        </section>
+      </form>
+      <noscript><p class="error">Please enable JavaScript to load your three questions and submit your responses.</p></noscript>
+    </main>
+    <main id="complete-view" hidden>
+      <section class="hero complete-hero" aria-labelledby="complete-title">
+        <div class="completion-mark" aria-hidden="true">✓</div>
+        <div class="eyebrow">All three responses received</div>
+        <h1 id="complete-title" tabindex="-1">Thank you for<br><span>your feedback.</span></h1>
+        <p>Your answers and feedback have been submitted. You’re helping us make the questions clearer and better. You can close this tab.</p>
+      </section>
+    </main>
+    <footer class="footer">Grant Control Trivia · Independent question evaluation · Please do not enter identifying details.</footer>
+  </div>
+</body>
+</html>

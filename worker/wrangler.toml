@@ -1,0 +1,13 @@
+name = "grant-control-trivia-writer"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+GAME = "grant-control-trivia"
+ALLOWED_ORIGIN = "https://edwinmeriaux.github.io"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "survey-responses"
+database_id = "00cf13c9-d4bf-427a-9034-4a14aef1ed84"

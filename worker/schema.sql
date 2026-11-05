@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS trivia_responses (
+  respondent_id TEXT NOT NULL,
+  game TEXT NOT NULL,
+  survey_version INTEGER NOT NULL,
+  deck_version INTEGER NOT NULL,
+  started_at TEXT NOT NULL,
+  completed_at TEXT NOT NULL,
+  background TEXT NOT NULL CHECK (background IN ('academia_controls', 'academia_other', 'non_academia')),
+  highest_degree TEXT NOT NULL CHECK (highest_degree IN ('phd', 'masters', 'undergrad', 'other')),
+  question_position INTEGER NOT NULL CHECK (question_position BETWEEN 1 AND 3),
+  question_id TEXT NOT NULL,
+  question_title TEXT NOT NULL,
+  question_topic TEXT NOT NULL,
+  question_text TEXT NOT NULL,
+  answer TEXT NOT NULL CHECK (length(trim(answer)) BETWEEN 1 AND 5000),
+  clarity INTEGER NOT NULL CHECK (clarity BETWEEN 1 AND 5),
+  technical_issues TEXT NOT NULL DEFAULT '' CHECK (length(technical_issues) <= 5000),
+  received_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (game, respondent_id, question_id),
+  UNIQUE (game, respondent_id, question_position)
+);
