@@ -83,7 +83,7 @@ test('rejects invalid profile, identity, versions, and timestamps', () => {
   for (const [key, value] of [
     ['background', null], ['background', 'other'], ['highest_degree', null],
     ['highest_degree', 'doctor'], ['respondent_id', 'same-person'],
-    ['survey_version', 2], ['deck_version', 0], ['game', 'grant-control'],
+    ['survey_version', 2], ['deck_version', 0], ['deck_version', deck.deck_version - 1], ['game', 'grant-control'],
     ['started_at', 'bad'], ['completed_at', '2026-11-04T00:00:00Z'],
   ]) assert.ok(validateSubmission({ ...submission(), [key]: value }, game), key);
 });

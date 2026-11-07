@@ -10,7 +10,9 @@ Refreshing preserves the three assigned questions and unfinished answers in the 
 
 `source/questions.pdf` is a copy of the supplied question-card PDF. `tools/extract_questions.py` extracts all 12 question prompts and original card images into `questions.json` and `question-images/`. Both the frontend and Worker use this same question manifest.
 
-The worked-answer PDF remains local. Root-level PDFs and `private/` are ignored by Git. The public build copies an explicit list of frontend assets into `dist/`; it includes no PDFs, worked answers, hints, response exports, or Worker source. No correctness feedback is shown to participants.
+Deck version 2 uses `Grant_Control_12_Question_Cards (6).pdf`: two questions each on H∞ control, LQR, LQG, and bang-bang control, plus four on nonlinear control. It replaces the previous deck. Drafts and completion confirmations from an older deck are reset when the new deck loads.
+
+The matching `Grant_Control_Worked_Answers (5).pdf` is kept locally as `private/worked-answers.pdf`. Root-level PDFs and `private/` are ignored by Git. The public build copies an explicit list of frontend assets into `dist/`; it includes no PDFs, worked answers, hints, response exports, or Worker source. No correctness feedback is shown to participants.
 
 ## Run locally
 

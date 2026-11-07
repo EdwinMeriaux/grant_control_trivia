@@ -4,7 +4,7 @@ const config = window.SURVEY_CONFIG;
 const storageKey = 'grant-control-trivia:three-question-survey:v1';
 const backgrounds = ['academia_controls', 'academia_other', 'non_academia'];
 const degrees = ['phd', 'masters', 'undergrad', 'other'];
-const topicColors = { 'Feedback / PID': '#a1551b', 'Stability': '#285f9c', 'Linear Systems': '#5860a0', 'Estimation': '#287b70', 'Optimization / MPC': '#78549b', 'Multi-Agent Systems': '#916127' };
+const topicColors = { 'H∞ control': '#a1551b', 'LQR': '#285f9c', 'LQG': '#287b70', 'Bang-bang control': '#78549b', 'Nonlinear control': '#916127' };
 const escapeHtml = text => String(text ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 let deck;
 let state;
@@ -89,7 +89,7 @@ async function load() {
     deck = await response.json();
     if (!Number.isInteger(deck.deck_version) || !Array.isArray(deck.questions) || deck.questions.length < 3 || new Set(deck.questions.map(q => q.id)).size !== deck.questions.length) throw new Error('The question deck is unavailable. Please contact the survey organizer.');
     const saved = readDraft();
-    if (saved?.complete === true) { state = saved; finish(); return; }
+    if (saved?.complete === true && saved.deck_version === deck.deck_version) { state = saved; finish(); return; }
     const canRestore = saved && saved.deck_version === deck.deck_version &&
       typeof saved.respondent_id === 'string' && Number.isFinite(Date.parse(saved.started_at)) &&
       Array.isArray(saved.question_ids) && saved.question_ids.length === 3 &&

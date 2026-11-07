@@ -1,125 +1,138 @@
 {
-  "deck_version": 1,
+  "deck_version": 2,
   "questions": [
     {
-      "id": "TW-PID-01",
-      "title": "A quick PI stability check",
-      "topic": "Feedback / PID",
+      "id": "TW-HINF-01",
+      "title": "What does the bound guarantee?",
+      "topic": "H∞ control",
       "paragraphs": [
-        "With unity negative feedback, use G(s)=1/(s+1) and C(s)=1+Ki/s, where Ki>0.",
-        "Is the closed loop asymptotically stable for every positive Ki? Justify briefly."
+        "A stable closed-loop transfer T maps disturbance w to output z, with zero initial state.",
+        "Its H∞ norm is at most 2.",
+        "State the resulting L2-norm bound. Does it also imply |z(t)| ≤ 2|w(t)| at every instant?"
       ],
-      "image": "question-images/TW-PID-01.png"
+      "image": "question-images/TW-HINF-01.png"
     },
     {
-      "id": "TW-PID-02",
-      "title": "Why does the integrator wind up?",
-      "topic": "Feedback / PID",
+      "id": "TW-HINF-02",
+      "title": "A small-gain certificate",
+      "topic": "H∞ control",
       "paragraphs": [
-        "An actuator saturates while a PI controller keeps accumulating positive error.",
-        "Why can recovery become slow, and how can anti-windup help?"
+        "A well-posed feedback loop connects stable blocks M and Δ.",
+        "You know ||M||∞ = 2 and ||Δ||∞ ≤ δ.",
+        "What range of δ gives a strict small-gain stability certificate? What can this test conclude at δ = 0.5?"
       ],
-      "image": "question-images/TW-PID-02.png"
+      "image": "question-images/TW-HINF-02.png"
     },
     {
-      "id": "TW-STA-01",
-      "title": "A Lyapunov derivative with zeros",
-      "topic": "Stability",
+      "id": "TW-LQR-01",
+      "title": "Which Riccati root?",
+      "topic": "LQR",
       "paragraphs": [
-        "For dx/dt=y and dy/dt=-x-y^3, V=(x^2+y^2)/2 gives dV/dt=-y^4.",
-        "Do all trajectories approach the origin? Explain why y=0 cannot persist when x is nonzero."
+        "For dx/dt = x + u, minimize J = ∫₀∞ (x² + u²) dt.",
+        "The scalar Riccati equation is 2P − P² + 1 = 0, with u = −Px.",
+        "Which root gives the stabilizing LQR solution? Give its closed-loop pole."
       ],
-      "image": "question-images/TW-STA-01.png"
+      "image": "question-images/TW-LQR-01.png"
     },
     {
-      "id": "TW-STA-02",
-      "title": "Which initial states return to zero?",
-      "topic": "Stability",
+      "id": "TW-LQR-02",
+      "title": "Scaling both cost weights",
+      "topic": "LQR",
       "paragraphs": [
-        "For dx/dt=-x+x^3, which initial states converge to zero: |x(0)|<1, |x(0)|<=1, or all real values?",
-        "Explain your choice."
+        "A standard unconstrained infinite-horizon LQR problem has a unique stabilizing gain K.",
+        "Replace Q by 10Q and R by 10R, leaving the dynamics unchanged.",
+        "Does K change? What happens to the optimal cost? Explain without solving a Riccati equation."
       ],
-      "image": "question-images/TW-STA-02.png"
+      "image": "question-images/TW-LQR-02.png"
     },
     {
-      "id": "TW-LIN-01",
-      "title": "An uncontrollable but stabilizable system",
-      "topic": "Linear Systems",
+      "id": "TW-LQG-01",
+      "title": "Poles after adding an estimator",
+      "topic": "LQG",
       "paragraphs": [
-        "A continuous-time system has A=diag(-1,2), B=[0;1], and feedback u=-Kx.",
-        "Can feedback stabilize it even though it is not controllable? Give one suitable K."
+        "A continuous-time LQG controller uses u = −Kx̂ and a Kalman estimator.",
+        "A − BK has poles −1 and −2. A − LC has poles −3 and −4.",
+        "What are the four poles of the nominal combined system? Explain the separation argument."
       ],
-      "image": "question-images/TW-LIN-01.png"
+      "image": "question-images/TW-LQG-01.png"
     },
     {
-      "id": "TW-LIN-02",
-      "title": "Can one input control both states?",
-      "topic": "Linear Systems",
+      "id": "TW-LQG-02",
+      "title": "A noisier sensor",
+      "topic": "LQG",
       "paragraphs": [
-        "A continuous-time system has A=[0,1;0,0], B=[0;1].",
-        "Is it controllable? Show the matrix [B,AB]."
+        "In a standard unconstrained LQG design, keep A, B, C, the process noise and the LQR cost weights fixed.",
+        "Increase only the measurement-noise covariance.",
+        "Must the LQR state-feedback gain K change? Which design must be recomputed, and why?"
       ],
-      "image": "question-images/TW-LIN-02.png"
+      "image": "question-images/TW-LQG-02.png"
     },
     {
-      "id": "TW-EST-01",
-      "title": "How much should a Kalman update move?",
-      "topic": "Estimation",
+      "id": "TW-BB-01",
+      "title": "Accelerate, then brake",
+      "topic": "Bang-bang control",
       "paragraphs": [
-        "For y=x+v, a scalar Kalman filter has prior estimate x_hat=2, prior variance P=1, and independent measurement-noise variance R=3. The new measurement is y=6.",
-        "What is the updated estimate?"
+        "A unit-mass particle obeys dx/dt = v, dv/dt = u, |u| ≤ 1.",
+        "Move from (x,v) = (0,0) to (1,0) in minimum time.",
+        "Give the two bang values, the switching time and the total time. Briefly justify the times."
       ],
-      "image": "question-images/TW-EST-01.png"
+      "image": "question-images/TW-BB-01.png"
     },
     {
-      "id": "TW-EST-02",
-      "title": "Can state and bias be separated?",
-      "topic": "Estimation",
+      "id": "TW-BB-02",
+      "title": "When the switching function vanishes",
+      "topic": "Bang-bang control",
       "paragraphs": [
-        "A sensor repeatedly reports y=x+b, where both the unknown state x and unknown bias b are constant.",
-        "Can an estimator uniquely recover both from these readings alone? Explain."
+        "Use the MINIMIZATION convention for a Hamiltonian H = H₀ + φ(t)u, with |u| ≤ 1.",
+        "Give the minimizing u when φ > 0 and when φ < 0.",
+        "If φ is zero throughout an interval, does this condition determine u there? Name this type of arc."
       ],
-      "image": "question-images/TW-EST-02.png"
+      "image": "question-images/TW-BB-02.png"
     },
     {
-      "id": "TW-MPC-01",
-      "title": "A bounded control move",
-      "topic": "Optimization / MPC",
+      "id": "TW-NL-01",
+      "title": "Beyond a non-increasing V",
+      "topic": "Nonlinear control",
       "paragraphs": [
-        "For x_next=x+u at x=2, minimize (x+u)^2+u^2 subject to -0.5<=u<=0.5.",
-        "What input minimizes the cost?"
+        "Consider dx/dt = y and dy/dt = −x − y³.",
+        "Take V = (x² + y²)/2.",
+        "Compute dV/dt. Can you conclude global asymptotic stability of the origin? Identify the invariant-set argument."
       ],
-      "image": "question-images/TW-MPC-01.png"
+      "image": "question-images/TW-NL-01.png"
     },
     {
-      "id": "TW-MPC-02",
-      "title": "What does receding horizon mean?",
-      "topic": "Optimization / MPC",
+      "id": "TW-NL-02",
+      "title": "A local result has limits",
+      "topic": "Nonlinear control",
       "paragraphs": [
-        "An MPC solve returns the planned inputs [0.4, 0.1, -0.2].",
-        "In standard receding-horizon control, which input is applied now, and what happens at the next sampling instant?"
+        "For dx/dt = −x + x³, the linearization at the origin is dx/dt = −x.",
+        "Is the origin globally asymptotically stable? Find its exact region of attraction on the real line and explain what limits it."
       ],
-      "image": "question-images/TW-MPC-02.png"
+      "image": "question-images/TW-NL-02.png"
     },
     {
-      "id": "TW-MAS-01",
-      "title": "Connected, but still no consensus",
-      "topic": "Multi-Agent Systems",
+      "id": "TW-NL-03",
+      "title": "Exact feedback linearization",
+      "topic": "Nonlinear control",
       "paragraphs": [
-        "Two agents synchronously use x1(k+1)=x2(k), x2(k+1)=x1(k). Initially their values are 0 and 2.",
-        "Do they converge to consensus? Explain."
+        "A system has full-state measurements and no input limits:",
+        "dx₁/dt = x₂",
+        "dx₂/dt = sin(x₁) + (1 + x₁²)u.",
+        "Choose u(x₁,x₂) so that d²x₁/dt² + 3 dx₁/dt + 2x₁ = 0.",
+        "Is your feedback singular anywhere?"
       ],
-      "image": "question-images/TW-MAS-01.png"
+      "image": "question-images/TW-NL-03.png"
     },
     {
-      "id": "TW-MAS-02",
-      "title": "Consensus can be a weighted average",
-      "topic": "Multi-Agent Systems",
+      "id": "TW-NL-04",
+      "title": "Attraction to a cycle",
+      "topic": "Nonlinear control",
       "paragraphs": [
-        "Agents use x(k+1)=W*x(k), with W=[1/2,1/2;1/4,3/4], x(0)=[0;6].",
-        "What common value do they approach? Briefly justify."
+        "In polar coordinates, a planar system obeys dr/dt = r(1 − r²), dθ/dt = 1.",
+        "For any initial radius r > 0, what motion attracts the trajectory?",
+        "If two trajectories start on that motion with different phases, do their positions converge to each other?"
       ],
-      "image": "question-images/TW-MAS-02.png"
+      "image": "question-images/TW-NL-04.png"
     }
   ]
 }

@@ -14,6 +14,31 @@ const browser = await chromium.launch({ executablePath, headless: true });
 await mkdir('test-results', { recursive: true });
 const errors = [];
 try {
+  for (const complete of [false, true]) {
+    const legacy = await browser.newContext();
+    const legacyPage = await legacy.newPage();
+    await legacyPage.route(productionPattern, route => route.abort());
+    await legacyPage.goto(origin);
+    await legacyPage.locator('.trivia-question').last().waitFor();
+    const oldRespondent = 'fa9bb289-9be8-457a-8fbb-eacac322ab92';
+    await legacyPage.evaluate(({ complete, oldRespondent, version }) => {
+      sessionStorage.setItem('grant-control-trivia:three-question-survey:v1', JSON.stringify({
+        respondent_id: oldRespondent, started_at: '2026-11-05T18:00:00.000Z',
+        deck_version: version - 1, question_ids: ['TW-PID-01', 'TW-PID-02', 'TW-STA-01'],
+        answers: { 'TW-PID-01': { answer: 'Old deck answer', clarity: 5, technical_issues: '' } },
+        background: 'academia_controls', highest_degree: 'phd', complete,
+      }));
+    }, { complete, oldRespondent, version: deck.deck_version });
+    await legacyPage.reload();
+    await legacyPage.locator('.trivia-question').last().waitFor();
+    assert.equal(await legacyPage.locator('#complete-view').isVisible(), false);
+    const restored = await legacyPage.evaluate(() => JSON.parse(sessionStorage.getItem('grant-control-trivia:three-question-survey:v1')));
+    assert.equal(restored.deck_version, deck.deck_version);
+    assert.notEqual(restored.respondent_id, oldRespondent);
+    assert(restored.question_ids.every(id => deck.questions.some(q => q.id === id)));
+    assert(Object.values(restored.answers).every(answer => answer.answer === ''));
+    await legacy.close();
+  }
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
   const page = await context.newPage();
   page.on('pageerror', error => errors.push(error.message));
@@ -113,8 +138,30 @@ try {
   await mobilePage.screenshot({ path: 'test-results/mobile.png', fullPage: true });
   await mobilePage.setViewportSize({ width: 320, height: 800 });
   assert(await mobilePage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), '320px layout must not overflow horizontally');
+  for (let start = 0; start < deck.questions.length; start += 3) {
+    const questions = deck.questions.slice(start, start + 3);
+    await mobilePage.evaluate(({ questions, version }) => {
+      sessionStorage.setItem('grant-control-trivia:three-question-survey:v1', JSON.stringify({
+        respondent_id: crypto.randomUUID(), started_at: new Date().toISOString(),
+        deck_version: version, question_ids: questions.map(q => q.id), answers: {},
+        background: null, highest_degree: null,
+      }));
+    }, { questions, version: deck.deck_version });
+    await mobilePage.reload();
+    await mobilePage.locator('.trivia-question').last().waitFor();
+    for (const question of questions) {
+      const card = mobilePage.locator(`[data-question-id="${question.id}"]`);
+      const text = await card.locator('.prompt > p:not(.prompt-note)').allTextContents();
+      assert.deepEqual(text, question.paragraphs, 'Question text and mathematical symbols must match the deck');
+      await card.locator('summary').click();
+      await card.locator('img').evaluate(img => img.decode());
+      assert(await card.locator('img').evaluate(img => img.naturalWidth === 504 && img.naturalHeight === 720));
+    }
+    assert(await mobilePage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'Every updated card must fit at 320px');
+  }
+  await mobilePage.screenshot({ path: 'test-results/updated-deck-mobile.png', fullPage: true });
   assert.deepEqual(errors, []);
-  console.log('PASS: three unique questions, required answers/profile, refresh persistence, failure retention, real local D1 submission, retry idempotency, conflicting retry rollback, completion persistence, desktop/mobile layouts.');
+  console.log('PASS: old draft/completion reset, all 12 updated prompts and images, three unique questions, required answers/profile, refresh persistence, failure retention, real local D1 submission, retry idempotency, conflicting retry rollback, completion persistence, desktop/mobile layouts.');
   console.log('Production received no test submissions. Screenshots: test-results/.');
 } finally {
   await browser.close();
